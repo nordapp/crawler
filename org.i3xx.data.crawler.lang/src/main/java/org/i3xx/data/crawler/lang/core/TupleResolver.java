@@ -159,8 +159,9 @@ public class TupleResolver {
 		if(variables.containsKey(key))
 			node = variables.get(key);
 		
-		if( !(node instanceof LeafNode))
-			throw new IllegalArgumentException(fname+": The variable '"+key+"' is not a leaf node.");
+		//Structure nodes allowed, sh 11.06
+		//if( !(node instanceof LeafNode))
+		//	throw new IllegalArgumentException(fname+": The variable '"+key+"' is not a leaf node.");
 		
 		if( func instanceof FunctionVars  )
 			return ((FunctionVars) func).exec(node, variables, fix);
