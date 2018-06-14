@@ -9,7 +9,7 @@ import org.i3xx.data.crawler.lang.core.Node.Type;
 
 public class JsonOut implements Function {
 	
-	public static final String NAME = "jsonmp";
+	public static final String NAME = "jsonp";
 	
 	@Override
 	public Function getInstance() {

@@ -108,6 +108,7 @@ public class TupleResolver {
 			}
 		}else{
 			if(node.getType()==Type.SET) {
+				//Set the result to the parameter map
 				result = new LeafNodeImpl(node.getType(), node.getName(), ((LeafNode)node).getValue());
 				putVar(result.getName(), result, depth, variables);
 			}else if(functions.containsKey(node.getName())) {
@@ -135,6 +136,10 @@ public class TupleResolver {
 		
 		//Zuweisung nur auf Ebene '0'
 		if(depth==0) {
+			variables.put(name, node);
+		}
+		//oder ein explizites Set liegt im Falle einer inneren Zuweisung vor
+		else if(node.getType()==Node.Type.SET){
 			variables.put(name, node);
 		}
 	}

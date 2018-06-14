@@ -12,8 +12,8 @@ class JsonOutTest {
 		String stmt = "";
 		
 		stmt += "a {\"person\": {\"first-name\":\"John\", \"name\":\"Doe\", \"test\":7}}\n";
-		stmt += "jsonm a\n";
-		stmt += "jsonmp a\n";
+		stmt += "json a\n";
+		stmt += "jsonp a\n";
 		
 		TupleParser p = new TupleParser();
 		p.parse(list, stmt);

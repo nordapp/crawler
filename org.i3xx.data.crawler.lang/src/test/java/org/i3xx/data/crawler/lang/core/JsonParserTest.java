@@ -13,7 +13,7 @@ class JsonParserTest {
 		ListNode list = new ListNodeImpl();
 		String stmt = "";
 		
-		stmt += "jsonm ( a {\"person\": {\"first-name\":\"John\", \"name\":\"Doe\", \"test\":7}} )\n";
+		stmt += "json ( a {\"person\": {\"first-name\":\"John\", \"name\":\"Doe\", \"test\":7}} )\n";
 		
 		TupleParser p = new TupleParser();
 		p.parse(list, stmt);
@@ -56,7 +56,7 @@ class JsonParserTest {
 		String stmt = "";
 		
 		stmt += "a {\"person\": {\"first-name\":\"John\", \"name\":\"Doe\", \"test\":7}}\n";
-		stmt += "b ( jsonm a )\n";
+		stmt += "b ( json a )\n";
 		
 		TupleParser p = new TupleParser();
 		p.parse(list, stmt);

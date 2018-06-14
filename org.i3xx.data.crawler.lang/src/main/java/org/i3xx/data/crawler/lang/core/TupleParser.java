@@ -76,7 +76,7 @@ public class TupleParser {
 				if(line.startsWith("#"))
 					continue;
 				
-				String[] tp = line.split("\\s", 2);
+				String[] tp = line.split("\\s+", 2);
 				if(tp.length!=2)
 					throw new IllegalArgumentException("'"+line+"' is not a tuple.");
 				

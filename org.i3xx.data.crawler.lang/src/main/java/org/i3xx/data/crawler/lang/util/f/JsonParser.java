@@ -14,7 +14,7 @@ import org.json.simple.parser.ParseException;
 
 public class JsonParser implements Function {
 	
-	public static final String NAME = "jsonm";
+	public static final String NAME = "json";
 	
 	@Override
 	public Function getInstance() {

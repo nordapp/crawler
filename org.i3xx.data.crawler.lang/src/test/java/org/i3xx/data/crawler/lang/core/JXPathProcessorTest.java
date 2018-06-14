@@ -16,7 +16,7 @@ class JXPathProcessorTest {
 		ListNode list = new ListNodeImpl();
 		String stmt = "";
 		
-		stmt += "json ( a {\"person\": {\"first-name\":\"John\", \"name\":\"Doe\", \"test\":7}} )\n";
+		stmt += "json ( ~a {\"person\": {\"first-name\":\"John\", \"name\":\"Doe\", \"test\":7}} )\n";
 		stmt += "jxpath ( a /person/first-name )\n";
 		
 		TupleParser p = new TupleParser();
