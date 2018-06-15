@@ -76,10 +76,6 @@ public class LeafNodeImpl implements LeafNode {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		if(value.startsWith("\"") && value.endsWith("\"")) {
-			return "\""+name+"\":"+value+"";
-		}else {
-			return "{\""+name+"\":\""+value+"\"}";
-		}
+		return "{\""+name+"\":\""+value+"\"}";
 	}
 }

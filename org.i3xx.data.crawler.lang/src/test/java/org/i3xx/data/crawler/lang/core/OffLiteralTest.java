@@ -25,7 +25,28 @@ class OffLiteralTest {
 		assertTrue( n instanceof LeafNodeImpl );
 		assertEquals( n.getName(), "a");
 		assertEquals( ((LeafNode)n).getValue(), "Test");
+	}
+
+	@Test
+	void testB() throws Exception {
 		
+		ListNode list = new ListNodeImpl();
+		String stmt = "";
+		
+		stmt += "a \"Test\"\n";
+		stmt += "b ( resolve a )\n";
+		stmt += "offliteral b\n";
+		stmt += "print b\n";
+		
+		TupleParser p = new TupleParser();
+		p.parse(list, stmt);
+		
+		TupleResolver r = new TupleResolver();
+		Node n = r.resolveAndGetLast(list);
+		
+		assertTrue( n instanceof LeafNodeImpl );
+		assertEquals( n.getName(), "b");
+		assertEquals( ((LeafNode)n).getValue(), "Test");
 	}
 
 }
