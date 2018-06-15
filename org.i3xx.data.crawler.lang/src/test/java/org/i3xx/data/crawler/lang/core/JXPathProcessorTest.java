@@ -27,7 +27,7 @@ class JXPathProcessorTest {
 		
 		assertTrue( n instanceof LeafNodeImpl );
 		assertEquals( n.getName(), "a");
-		assertEquals( ((LeafNode)n).getValue(), "{\"first-name\":\"John\"}");
+		assertEquals( ((LeafNode)n).getValue(), "leaf::first-name::'John'");
 	}
 	
 	//

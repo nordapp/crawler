@@ -76,6 +76,6 @@ public class LeafNodeImpl implements LeafNode {
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		return "{\""+name+"\":\""+value+"\"}";
+		return "leaf::"+name+"::'"+value+"'";
 	}
 }

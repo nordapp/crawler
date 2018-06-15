@@ -7,9 +7,13 @@ import java.util.List;
 
 import org.i3xx.data.crawler.lang.core.Node.Type;
 import org.i3xx.data.crawler.lang.util.BuiltinFunctions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TupleResolver {
-
+	
+	private static Logger logger = LoggerFactory.getLogger(TupleResolver.class);
+	
 	private final Map<String, Function> functions;
 	
 	private final Map<String, Node> variables;
@@ -136,10 +140,12 @@ public class TupleResolver {
 		
 		//Zuweisung nur auf Ebene '0'
 		if(depth==0) {
+			logger.debug("Set variable key:{}, hash:{}, node:{}", name, node.hashCode(), node);
 			variables.put(name, node);
 		}
 		//oder ein explizites Set liegt im Falle einer inneren Zuweisung vor
 		else if(node.getType()==Node.Type.SET){
+			logger.debug("Set variable key:{}, hash:{}, node:{}", name, node.hashCode(), node);
 			variables.put(name, node);
 		}
 	}
@@ -161,16 +167,24 @@ public class TupleResolver {
 		String key = leaf.getValue();
 		Node node = leaf;
 		
-		if(variables.containsKey(key))
+		if(variables.containsKey(key)) {
 			node = variables.get(key);
+			logger.debug("Get variable by function name:{}, key:{}, hash:{}",
+					fname, key, node.hashCode(), node);
+		}
 		
 		//Structure nodes allowed, sh 11.06
 		//if( !(node instanceof LeafNode))
 		//	throw new IllegalArgumentException(fname+": The variable '"+key+"' is not a leaf node.");
+		Node resl = null;
+		logger.debug("Node to function key:{}, hash:{}, node:{}", node.getName(), node.hashCode(), node);
 		
 		if( func instanceof FunctionVars  )
-			return ((FunctionVars) func).exec(node, variables, fix);
+			resl = ((FunctionVars) func).exec(node, variables, fix);
+		else
+			resl = func.exec(node, fix);
 		
-		return func.exec(node, fix);
+		logger.debug("Node return key:{}, hash:{}, node:{}", resl.getName(), resl.hashCode(), resl);
+		return resl;
 	}
 }

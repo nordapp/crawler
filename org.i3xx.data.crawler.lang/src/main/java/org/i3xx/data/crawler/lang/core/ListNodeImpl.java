@@ -58,7 +58,7 @@ public class ListNodeImpl implements ListNode {
 			buf.append(struct.get(i).toString());
 		}
 		
-		return "{\""+name+"\":["+buf.toString()+"]}";
+		return "list::"+name+"::["+buf.toString()+"]";
 	}
 
 }
