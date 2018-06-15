@@ -12,6 +12,7 @@ import org.i3xx.data.crawler.lang.util.f.JsonParser;
 import org.i3xx.data.crawler.lang.util.f.Monades;
 import org.i3xx.data.crawler.lang.util.f.PrintOut;
 import org.i3xx.data.crawler.lang.util.f.ResolveVariables;
+import org.i3xx.data.crawler.lang.util.f.UnpackLiteral;
 
 public class BuiltinFunctions {
 
@@ -26,6 +27,7 @@ public class BuiltinFunctions {
 		functions.put(JsonOut.NAME, new JsonOut());
 		functions.put(GitHubProperties.NAME, new GitHubProperties());
 		functions.put(Monades.NAME, new Monades());
+		functions.put(UnpackLiteral.NAME, new UnpackLiteral());
 		
 		return functions;
 	}

@@ -3,11 +3,11 @@ package org.i3xx.data.crawler.lang.core;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Disabled;
 
 class GitHubPropsTest {
 
-	@Test
+	@Disabled
 	void testA() throws Exception {
 		
 		ListNode list = new ListNodeImpl();
@@ -30,7 +30,7 @@ class GitHubPropsTest {
 		assertEquals( n.getName(), "gitprops");
 	}
 
-	@Test
+	@Disabled
 	void testB() throws Exception {
 		
 		ListNode list = new ListNodeImpl();

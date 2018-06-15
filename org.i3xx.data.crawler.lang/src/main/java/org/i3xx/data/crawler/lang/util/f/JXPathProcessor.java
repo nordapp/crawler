@@ -12,6 +12,13 @@ import org.i3xx.data.crawler.lang.core.Node;
 import org.i3xx.data.crawler.lang.core.Node.Type;
 import org.i3xx.data.crawler.lang.util.f.json.ScratchPointerFactory;
 
+/**
+ * JXPath processing of the intern data struct. Used to put a specified
+ * node to the variable map.
+ *  
+ * @author green
+ *
+ */
 public class JXPathProcessor extends FunctionVars {
 	
 	public static final String NAME = "jxpath";

@@ -22,6 +22,12 @@ import org.i3xx.data.crawler.lang.core.LeafNodeImpl;
 import org.i3xx.data.crawler.lang.core.Node;
 import org.i3xx.data.crawler.lang.core.Node.Type;
 
+/**
+ * Reads one property file from git and insert the properties to the variables map.
+ * 
+ * @author green
+ *
+ */
 public class GitHubProperties extends FunctionVars {
 	
 	public static final String NAME = "gitprops";

@@ -7,6 +7,12 @@ import org.i3xx.data.crawler.lang.core.ListNode;
 import org.i3xx.data.crawler.lang.core.Node;
 import org.i3xx.data.crawler.lang.core.Node.Type;
 
+/**
+ * Print out the intern data to a JSON String
+ * 
+ * @author green
+ *
+ */
 public class JsonOut implements Function {
 	
 	public static final String NAME = "jsonp";

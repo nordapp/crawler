@@ -21,6 +21,12 @@ import org.i3xx.data.crawler.lang.core.Node;
 import org.i3xx.data.crawler.lang.core.Node.Type;
 import org.i3xx.data.crawler.lang.util.NodeTools;
 
+/**
+ * Simple to use http GET
+ * 
+ * @author green
+ *
+ */
 public class GetHttpTensor implements Function {
 	
 	public static final String NAME = "gethttp";

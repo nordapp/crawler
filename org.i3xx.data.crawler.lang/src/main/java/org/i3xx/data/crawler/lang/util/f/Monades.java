@@ -5,6 +5,12 @@ import org.i3xx.data.crawler.lang.core.ListNode;
 import org.i3xx.data.crawler.lang.core.Node;
 import org.i3xx.data.crawler.lang.core.TupleResolver;
 
+/**
+ * More than one monade in a single line
+ * 
+ * @author green
+ *
+ */
 public class Monades implements Function {
 	
 	public static final String NAME = "monades";

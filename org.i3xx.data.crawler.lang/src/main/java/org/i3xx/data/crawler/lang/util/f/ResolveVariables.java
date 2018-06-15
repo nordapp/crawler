@@ -12,6 +12,13 @@ import org.i3xx.data.crawler.lang.core.Node.Type;
 import org.i3xx.data.crawler.lang.util.NodeTools;
 import org.i3xx.data.crawler.lang.util.StringTools;
 
+/**
+ * Parses a variable and replace every placeholder by it'data from
+ * the variable map.
+ * 
+ * @author green
+ *
+ */
 public class ResolveVariables extends FunctionVars {
 	
 	public static final String NAME = "resolve";

@@ -12,6 +12,12 @@ import org.i3xx.data.crawler.lang.util.f.json.JnContentResolver;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+/**
+ * Parses JSON to the intern data struct
+ * 
+ * @author green
+ *
+ */
 public class JsonParser implements Function {
 	
 	public static final String NAME = "json";
