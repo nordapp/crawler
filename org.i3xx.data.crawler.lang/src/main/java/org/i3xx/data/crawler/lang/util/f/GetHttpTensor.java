@@ -37,19 +37,23 @@ public class GetHttpTensor implements Function {
 		List<Node> ls = new ArrayList<Node>();
 		
 		CloseableHttpClient httpclient = HttpClients.createDefault();
-		URI uri = new URI(param.getValue());
-		HttpGet httpget = new HttpGet(uri);
-		CloseableHttpResponse response = httpclient.execute(httpget);
 		try {
-			HttpEntity entity = response.getEntity();
-			if (entity != null) {
-				ls.add( new LeafNodeImpl(Type.NODE, "size", entity.getContentLength()) );
-				ls.add( new LeafNodeImpl(Type.NODE, "content", EntityUtils.toString(entity)) );
+			URI uri = new URI(param.getValue());
+			HttpGet httpget = new HttpGet(uri);
+			CloseableHttpResponse response = httpclient.execute(httpget);
+			try {
+				HttpEntity entity = response.getEntity();
+				if (entity != null) {
+					ls.add( new LeafNodeImpl(Type.NODE, "size", entity.getContentLength()) );
+					ls.add( new LeafNodeImpl(Type.NODE, "content", EntityUtils.toString(entity)) );
+				}
+				ls.add( new LeafNodeImpl(Type.NODE, "status-code", response.getStatusLine().getStatusCode()) );
+			}finally {
+				response.close();
+				httpget.completed();
 			}
-			ls.add( new LeafNodeImpl(Type.NODE, "status-code", response.getStatusLine().getStatusCode()) );
 		}finally {
-			response.close();
-			httpget.completed();
+			httpclient.close();
 		}
 		ListNode result = new ListNodeImpl(Type.NODE, "result", ls);
 		
