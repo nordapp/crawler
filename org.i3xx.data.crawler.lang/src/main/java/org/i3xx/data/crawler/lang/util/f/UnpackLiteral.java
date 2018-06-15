@@ -29,6 +29,7 @@ public class UnpackLiteral implements Function {
 				char c = text.charAt(0);
 				if(text.charAt(text.length()-1)==c)
 					text = text.substring(1, text.length()-1);
+				
 			}
 		}//fi
 		
