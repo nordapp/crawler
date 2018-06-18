@@ -86,10 +86,9 @@ public class TupleParser {
 				if(tp[0].startsWith("~")) {
 					tp[0] = tp[0].substring(1);
 					type = Type.SET;
-				}
-				else if(tp[0].endsWith("~")) {
-					tp[0] = tp[0].substring(0, tp[0].length()-1);
-					type = Type.FIX;
+				}else if(tp[0].startsWith("^")) {
+					tp[0] = tp[0].substring(1);
+					type = Type.RESOLVE;
 				}
 				
 				if(tp[1].startsWith("(") && tp[1].endsWith(")")) {

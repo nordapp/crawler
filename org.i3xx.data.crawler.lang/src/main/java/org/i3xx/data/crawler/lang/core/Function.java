@@ -13,5 +13,5 @@ public interface Function {
 	 * @param node The parameter node
 	 * @return The result node
 	 */
-	public Node exec(Node node, boolean fix) throws Exception;
+	public Node exec(Node node) throws Exception;
 }

@@ -21,7 +21,7 @@ public class Monades implements Function {
 	}
 
 	@Override
-	public Node exec(Node node, boolean fix) throws Exception {
+	public Node exec(Node node) throws Exception {
 		
 		if( ! (node instanceof ListNode) )
 			throw new IllegalArgumentException("Unable to resolve a leaf node, only a structure node is allowed '" +

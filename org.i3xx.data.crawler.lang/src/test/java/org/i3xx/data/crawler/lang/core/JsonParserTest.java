@@ -23,7 +23,7 @@ class JsonParserTest {
 		Node b = null;
 		
 		assertTrue( n instanceof ListNodeImpl );
-		assertEquals( n.getName(), "a");
+		assertEquals( n.getName(), "unknown");
 		
 		n = ((ListNode)n).getStruct().get(0);
 		

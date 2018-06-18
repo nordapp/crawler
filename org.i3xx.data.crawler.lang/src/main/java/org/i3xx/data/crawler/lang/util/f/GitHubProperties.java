@@ -38,7 +38,7 @@ public class GitHubProperties extends FunctionVars {
 	}
 	
 	@Override
-	public Node exec(Node node,  Map<String, Node> variables, boolean fix) throws IOException, URISyntaxException {
+	public Node exec(Node node,  Map<String, Node> variables) throws IOException, URISyntaxException {
 		
 		LeafNode param = (LeafNode)node;
 		List<Node> ls = new ArrayList<Node>();
@@ -73,7 +73,7 @@ public class GitHubProperties extends FunctionVars {
 			}//for
 		}//fi
 		
-		LeafNode temp = new LeafNodeImpl(Type.NODE, fix?NAME:node.getName(), properties==null?"":properties);
+		LeafNode temp = new LeafNodeImpl(Type.NODE, Node.UNKNOWN, properties==null?"":properties);
 		return temp;
 	}
 

@@ -16,7 +16,7 @@ public class UnpackLiteral implements Function {
 	}
 	
 	@Override
-	public Node exec(Node node, boolean fix) throws Exception {
+	public Node exec(Node node) throws Exception {
 		
 		LeafNode param = (LeafNode)node;
 		String text = param.getValue();
@@ -33,7 +33,7 @@ public class UnpackLiteral implements Function {
 			}
 		}//fi
 		
-		return new LeafNodeImpl(Type.NODE, fix?NAME:node.getName(), text);
+		return new LeafNodeImpl(Type.NODE, Node.UNKNOWN, text);
 	}
 
 }

@@ -23,12 +23,12 @@ public class JsonOut implements Function {
 	}
 	
 	@Override
-	public Node exec(Node node, boolean fix) throws Exception {
+	public Node exec(Node node) throws Exception {
 		
 		StringBuffer buf = new StringBuffer();
 		print(node, buf, 0);
 		
-		return new LeafNodeImpl(Type.NODE, fix?NAME:node.getName(), buf.toString());
+		return new LeafNodeImpl(Type.NODE, Node.UNKNOWN, buf.toString());
 	}
 	
 	private void print(Node node, StringBuffer buf, int depth) {

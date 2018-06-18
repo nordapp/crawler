@@ -10,7 +10,7 @@ public abstract class FunctionVars implements Function {
 	}
 	
 	@Override
-	public Node exec(Node node, boolean fix) throws Exception {
+	public Node exec(Node node) throws Exception {
 		throw new UnsupportedOperationException("The function need the variable map.");
 	}
 	
@@ -20,5 +20,5 @@ public abstract class FunctionVars implements Function {
 	 * @return
 	 * @throws Exception
 	 */
-	public abstract Node exec(Node node, Map<String, Node> variables, boolean fix) throws Exception;
+	public abstract Node exec(Node node, Map<String, Node> variables) throws Exception;
 }

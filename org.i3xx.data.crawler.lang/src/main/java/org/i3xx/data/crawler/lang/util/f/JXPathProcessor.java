@@ -3,6 +3,7 @@ package org.i3xx.data.crawler.lang.util.f;
 import java.util.Map;
 
 import org.apache.commons.jxpath.JXPathContext;
+import org.apache.commons.jxpath.Pointer;
 import org.apache.commons.jxpath.ri.JXPathContextReferenceImpl;
 import org.i3xx.data.crawler.lang.core.Function;
 import org.i3xx.data.crawler.lang.core.FunctionVars;
@@ -29,7 +30,7 @@ public class JXPathProcessor extends FunctionVars {
 	}
 
 	@Override
-	public Node exec(Node node, Map<String, Node> variables, boolean fix) throws Exception {
+	public Node exec(Node node, Map<String, Node> variables) throws Exception {
 		
 		LeafNode param = (LeafNode)node;
 		
@@ -43,13 +44,26 @@ public class JXPathProcessor extends FunctionVars {
 		JXPathContextReferenceImpl.addNodePointerFactory(new ScratchPointerFactory());
 		JXPathContext c = JXPathContext.newContext( val );
 		
-		Object value = c.getValue(path);
+		Pointer ptr = c.getPointer(path);
+		Object value = ptr.getValue();
+		//Object value = c.getValue(path);
+		
+		if(value instanceof Node) {
+			return (Node)value;
+		}
 		
 		String result = String.valueOf( value );
 		if(result==null)
 			throw new IllegalArgumentException("The path '"+path+"' is not available.");
 		
-		return new LeafNodeImpl(Type.NODE, fix?NAME:node.getName(), result);
+		String name = Node.UNKNOWN;
+		if (ptr.getNode() instanceof Node) {
+			String n = ((Node)ptr.getNode()).getName();
+			if(n!=null)
+				name = n;
+		}
+		
+		return new LeafNodeImpl(Type.NODE, name, result);
 	}
 
 }

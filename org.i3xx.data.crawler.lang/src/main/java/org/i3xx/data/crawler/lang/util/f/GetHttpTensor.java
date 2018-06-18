@@ -37,7 +37,7 @@ public class GetHttpTensor implements Function {
 	}
 	
 	@Override
-	public Node exec(Node node, boolean fix) throws IOException, URISyntaxException {
+	public Node exec(Node node) throws IOException, URISyntaxException {
 		
 		LeafNode param = (LeafNode)node;
 		List<Node> ls = new ArrayList<Node>();
@@ -63,7 +63,7 @@ public class GetHttpTensor implements Function {
 		}
 		ListNode result = new ListNodeImpl(Type.NODE, "result", ls);
 		
-		ListNode temp = NodeTools.newListNode(Type.NODE, fix?NAME:node.getName(), result);
+		ListNode temp = NodeTools.newListNode(Type.NODE, Node.UNKNOWN, result);
 		return temp;
 	}
 

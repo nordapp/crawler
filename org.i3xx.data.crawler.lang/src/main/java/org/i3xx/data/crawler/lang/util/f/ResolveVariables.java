@@ -29,7 +29,7 @@ public class ResolveVariables extends FunctionVars {
 	}
 
 	@Override
-	public Node exec(Node node, Map<String, Node> variables, boolean fix) throws Exception {
+	public Node exec(Node node, Map<String, Node> variables) throws Exception {
 		
 		if( ! (node instanceof LeafNode) )
 			throw new IllegalArgumentException("Unable to resolve a structure node, only a leaf node is allowed '" +
@@ -41,7 +41,7 @@ public class ResolveVariables extends FunctionVars {
 		if(variables.containsKey(text)) {
 			Node v = variables.get(text);
 			if(v instanceof ListNode) {
-				return NodeTools.newListNode(Type.NODE, fix?NAME:node.getName(), ((ListNode)v).getStruct().get(0));
+				return NodeTools.newListNode(Type.NODE, Node.UNKNOWN, ((ListNode)v).getStruct().get(0));
 			}
 		}
 		
@@ -57,7 +57,7 @@ public class ResolveVariables extends FunctionVars {
 			text = resl;
 		}//for
 		
-		return new LeafNodeImpl(Type.NODE, fix?NAME:node.getName(), text);
+		return new LeafNodeImpl(Type.NODE, Node.UNKNOWN, text);
 	}
 
 }

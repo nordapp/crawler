@@ -13,8 +13,8 @@ class OffLiteralTest {
 		ListNode list = new ListNodeImpl();
 		String stmt = "";
 		
-		stmt += "a \"Test\"\n";
-		stmt += "offliteral a\n";
+		stmt += "?a \"Test\"\n";
+		stmt += "offliteral ?a\n";
 		
 		TupleParser p = new TupleParser();
 		p.parse(list, stmt);
@@ -23,7 +23,7 @@ class OffLiteralTest {
 		Node n = r.resolveAndGetLast(list);
 		
 		assertTrue( n instanceof LeafNodeImpl );
-		assertEquals( n.getName(), "a");
+		assertEquals( n.getName(), "unknown");
 		assertEquals( ((LeafNode)n).getValue(), "Test");
 	}
 
@@ -33,10 +33,9 @@ class OffLiteralTest {
 		ListNode list = new ListNodeImpl();
 		String stmt = "";
 		
-		stmt += "a \"Test\"\n";
-		stmt += "b ( resolve a )\n";
-		stmt += "offliteral b\n";
-		stmt += "print b\n";
+		stmt += "?a \"Test\"\n";
+		stmt += "offliteral ?a\n";
+		stmt += "print ?a\n";
 		
 		TupleParser p = new TupleParser();
 		p.parse(list, stmt);
@@ -45,7 +44,7 @@ class OffLiteralTest {
 		Node n = r.resolveAndGetLast(list);
 		
 		assertTrue( n instanceof LeafNodeImpl );
-		assertEquals( n.getName(), "b");
+		assertEquals( n.getName(), "unknown");
 		assertEquals( ((LeafNode)n).getValue(), "Test");
 	}
 

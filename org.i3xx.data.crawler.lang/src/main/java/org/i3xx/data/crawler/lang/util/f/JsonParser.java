@@ -28,7 +28,7 @@ public class JsonParser implements Function {
 	}
 	
 	@Override
-	public Node exec(Node node, boolean fix) throws Exception {
+	public Node exec(Node node) throws Exception {
 		
 		LeafNode param = (LeafNode)node;
 		String val = param.getValue();
@@ -42,7 +42,7 @@ public class JsonParser implements Function {
 			throw new RuntimeException("The argument '"+val+"' is not a  valid JSON.", e);
 		}
 		
-		ListNode temp = new ListNodeImpl(Type.NODE, fix?NAME:node.getName(), new ArrayList<Node>());
+		ListNode temp = new ListNodeImpl(Type.NODE, Node.UNKNOWN, new ArrayList<Node>());
 		
 		JnContentResolver jr = new JnContentResolver(temp);
 		jr.process(null, obj);

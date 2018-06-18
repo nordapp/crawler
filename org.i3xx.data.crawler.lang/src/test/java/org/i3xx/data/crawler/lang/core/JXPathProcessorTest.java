@@ -16,8 +16,9 @@ class JXPathProcessorTest {
 		ListNode list = new ListNodeImpl();
 		String stmt = "";
 		
-		stmt += "json ( ~a {\"person\": {\"first-name\":\"John\", \"name\":\"Doe\", \"test\":7}} )\n";
-		stmt += "jxpath ( a /person/first-name )\n";
+		stmt += "?a {\"person\": {\"first-name\":\"John\", \"name\":\"Doe\", \"test\":7}}\n";
+		stmt += "json ?a\n";
+		stmt += "jxpath ( ?a /person/first-name )\n";
 		
 		TupleParser p = new TupleParser();
 		p.parse(list, stmt);
@@ -25,9 +26,13 @@ class JXPathProcessorTest {
 		TupleResolver r = new TupleResolver();
 		Node n = r.resolveAndGetLast(list);
 		
+		//
+		// n is the leaf node of the struct
+		//
+		
 		assertTrue( n instanceof LeafNodeImpl );
-		assertEquals( n.getName(), "a");
-		assertEquals( ((LeafNode)n).getValue(), "leaf::first-name::'John'");
+		assertEquals( n.getName(), "first-name");
+		assertEquals( ((LeafNode)n).getValue(), "John");
 	}
 	
 	//
@@ -40,10 +45,9 @@ class JXPathProcessorTest {
 		ListNode list = new ListNodeImpl();
 		String stmt = "";
 		
-		stmt += "a {\"person\": {\"first-name\":\"John\", \"name\":\"Doe\"}}\n";
-		stmt += "json a\n";
-		stmt += "jxpath ( a /person/first-name )\n";
-		stmt += "b jxpath\n";
+		stmt += "?a {\"person\": {\"first-name\":\"John\", \"name\":\"Doe\"}}\n";
+		stmt += "json ?a\n";
+		stmt += "jxpath ( ?a /person/first-name/@value )\n";
 		
 		TupleParser p = new TupleParser();
 		p.parse(list, stmt);
@@ -52,8 +56,8 @@ class JXPathProcessorTest {
 		Node n = r.resolveAndGetLast(list);
 		
 		assertTrue( n instanceof LeafNodeImpl );
-		assertEquals( n.getName(), "b");
-		assertEquals( ((LeafNode)n).getValue(), "jxpath");
+		assertEquals( n.getName(), "first-name");
+		assertEquals( ((LeafNode)n).getValue(), "John");
 	}
 
 	@Test
@@ -63,9 +67,9 @@ class JXPathProcessorTest {
 		String stmt = "";
 		
 		stmt += "a {\"person\": {\"first-name\":\"John\", \"name\":\"Doe\"}}\n";
-		stmt += "json a\n";
-		stmt += "jxpath ( a /person/first-name )\n";
-		stmt += "b $jxpath;\n";
+		stmt += "b (json a)\n";
+		stmt += "c (jxpath ( b /person/first-name ))\n";
+		stmt += "^d $c;\n";
 		
 		TupleParser p = new TupleParser();
 		p.parse(list, stmt);
@@ -74,8 +78,10 @@ class JXPathProcessorTest {
 		Node n = r.resolveAndGetLast(list);
 		
 		assertTrue( n instanceof LeafNodeImpl );
-		assertEquals( n.getName(), "b");
-		assertEquals( ((LeafNode)n).getValue(), "$jxpath;");
+		assertEquals( n.getName(), "unknown");
+		assertEquals( ((LeafNode)n).getValue(), "John");
+		//The variable d
+		assertEquals( ((LeafNode)r.getVariables().get("d")).getValue(), "John");
 	}
 	
 	//
@@ -88,10 +94,10 @@ class JXPathProcessorTest {
 		ListNode list = new ListNodeImpl();
 		String stmt = "";
 		
-		stmt += "a {\"person\": {\"first-name\":\"John\", \"name\":\"Doe\"}}\n";
-		stmt += "json a\n";
-		stmt += "jxpath ( a /person/first-name/@value )\n";
-		stmt += "resolve ( b $a; )\n";
+		stmt += "?a {\"person\": {\"first-name\":\"John\", \"name\":\"Doe\"}}\n";
+		stmt += "?a (json ?a)\n";
+		stmt += "?a (jxpath ( ?a /person/first-name/@value ))\n";
+		stmt += "resolve Mr. $?a; Doe\n";
 		
 		TupleParser p = new TupleParser();
 		p.parse(list, stmt);
@@ -99,9 +105,9 @@ class JXPathProcessorTest {
 		TupleResolver r = new TupleResolver();
 		Node n = r.resolveAndGetLast(list);
 		
-		assertTrue( n instanceof LeafNodeImpl );
-		assertEquals( n.getName(), "b");
-		assertEquals( ((LeafNode)n).getValue(), "John");
+		//assertTrue( n instanceof LeafNodeImpl );
+		assertEquals( n.getName(), "unknown");
+		assertEquals( ((LeafNode)n).getValue(), "Mr. John Doe");
 	}
 
 	@Test
@@ -111,8 +117,8 @@ class JXPathProcessorTest {
 		String stmt = "";
 		
 		stmt += "a {\"person\": {\"first-name\":\"John\", \"name\":\"Doe\"}}\n";
-		stmt += "json a\n";
-		stmt += "b ( jxpath ( a /person/first-name/@value ))\n";
+		stmt += "b (json a)\n";
+		stmt += "c ( jxpath ( b /person/first-name/@value ))\n";
 		
 		TupleParser p = new TupleParser();
 		p.parse(list, stmt);
@@ -121,7 +127,7 @@ class JXPathProcessorTest {
 		Node n = r.resolveAndGetLast(list);
 		
 		assertTrue( n instanceof LeafNodeImpl );
-		assertEquals( n.getName(), "b");
+		assertEquals( n.getName(), "c");
 		assertEquals( ((LeafNode)n).getValue(), "John");
 	}
 
@@ -132,9 +138,9 @@ class JXPathProcessorTest {
 		String stmt = "";
 		
 		stmt += "a {\"person\": {\"first-name\":\"John\", \"name\":\"Doe\"}}\n";
-		stmt += "json a\n";
-		stmt += "b ( jxpath ( a /person/first-name/@value ) )\n";
-		stmt += "print b\n";
+		stmt += "b (json a)\n";
+		stmt += "c ( jxpath ( b /person/first-name/@value ) )\n";
+		stmt += "print c\n";
 		
 		TupleParser p = new TupleParser();
 		p.parse(list, stmt);
@@ -143,7 +149,7 @@ class JXPathProcessorTest {
 		Node n = r.resolveAndGetLast(list);
 		
 		assertTrue( n instanceof LeafNodeImpl );
-		assertEquals( n.getName(), "b");
+		assertEquals( n.getName(), "unknown");
 		assertEquals( ((LeafNode)n).getValue(), "John");
 	}
 

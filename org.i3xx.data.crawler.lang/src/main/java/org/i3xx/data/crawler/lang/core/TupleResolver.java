@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.i3xx.data.crawler.lang.core.Node.Type;
 import org.i3xx.data.crawler.lang.util.BuiltinFunctions;
+import org.i3xx.data.crawler.lang.util.f.ResolveVariables;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,7 +85,8 @@ public class TupleResolver {
 		
 		if(node instanceof ListNode) {
 			
-			Node rsvd = resolveMonad( ((ListNode)node).getStruct().get(0), variables, depth+1);
+			Node strc = ((ListNode)node).getStruct().get(0);
+			Node rsvd = resolveMonad( strc, variables, depth+1);
 			
 			if(functions.containsKey(node.getName())) {
 				
@@ -94,7 +96,7 @@ public class TupleResolver {
 				
 				//If it's a function run the function
 				//and set the result to the parameter map
-				result = funcExec(node.getName(), (LeafNode)rsvd, variables, node.getType()==Type.FIX);
+				result = funcExec(node.getName(), (LeafNode)rsvd, variables);
 				putVar(result.getName(), result, depth, variables);
 			}else {
 				
@@ -115,11 +117,28 @@ public class TupleResolver {
 				//Set the result to the parameter map
 				result = new LeafNodeImpl(node.getType(), node.getName(), ((LeafNode)node).getValue());
 				putVar(result.getName(), result, depth, variables);
+			}else if(node.getType()==Type.RESOLVE) {
+				//Set the result to the parameter map
+				result = funcExec(ResolveVariables.NAME, (LeafNode)node, variables);
+				//In case of depth 0, variable name instead of result.getName() 'unknown'
+				String name = ( depth==0 ? node.getName() : result.getName() );
+				putVar(name, result, depth, variables);
+				//putVar(result.getName(), result, depth, variables);
 			}else if(functions.containsKey(node.getName())) {
 				//If it's a function run the function
 				//and set the result to the parameter map
-				result = funcExec(node.getName(), (LeafNode)node, variables, node.getType()==Type.FIX);
-				putVar(result.getName(), result, depth, variables);
+				result = funcExec(node.getName(), (LeafNode)node, variables);
+				//### some sugar ###
+				//In case of depth 0, variable name instead of result.getName() 'unknown'
+				String name = result.getName();
+				if(depth==0) {
+					String n = ((LeafNode)node).getValue();
+					if(n.charAt(0)=='?')
+						name = n;
+				}
+				putVar(name, result, depth, variables);
+				//###
+				//putVar(result.getName(), result, depth, variables);
 			}else {
 				//Set the value to the parameter map
 				result = node;
@@ -131,21 +150,41 @@ public class TupleResolver {
 	}
 	
 	/**
+	 * The variables are not modifyable except the name starts with '?'
+	 * or is 'unknown'
+	 * 
 	 * @param name
 	 * @param node
 	 * @param depth
 	 * @param variables
 	 */
 	private void putVar(String name, Node node, int depth, Map<String, Node> variables) {
+		//The variable UNKNOWN is not valid
+		if(Node.UNKNOWN.equals(name))
+			return;
 		
-		//Zuweisung nur auf Ebene '0'
-		if(depth==0) {
+		//Ein explizites Set liegt im Falle einer inneren Zuweisung vor
+		if(node.getType()==Node.Type.SET ){
 			logger.debug("Set variable key:{}, hash:{}, node:{}", name, node.hashCode(), node);
+			if(variables.containsKey(name) && name.charAt(0)!='?')
+				throw new UnsupportedOperationException("The variable '"+name+"' is unmodifyable.");
+			
 			variables.put(name, node);
 		}
 		//oder ein explizites Set liegt im Falle einer inneren Zuweisung vor
-		else if(node.getType()==Node.Type.SET){
+		else if(node.getType()==Node.Type.RESOLVE){
+			logger.debug("Set(^) variable key:{}, hash:{}, node:{}", name, node.hashCode(), node);
+			if(variables.containsKey(name) && name.charAt(0)!='?')
+				throw new UnsupportedOperationException("The variable '"+name+"' is unmodifyable.");
+			
+			variables.put(name, node);
+		}
+		//oder eine Zuweisung nur auf Ebene '0'
+		else if(depth==0) {
 			logger.debug("Set variable key:{}, hash:{}, node:{}", name, node.hashCode(), node);
+			if(variables.containsKey(name) && name.charAt(0)!='?')
+				throw new UnsupportedOperationException("The variable '"+name+"' is unmodifyable.");
+			
 			variables.put(name, node);
 		}
 	}
@@ -159,7 +198,7 @@ public class TupleResolver {
 	 * @return
 	 * @throws Exception
 	 */
-	private Node funcExec(String fname, LeafNode leaf, Map<String, Node> variables, boolean fix) throws Exception {
+	private Node funcExec(String fname, LeafNode leaf, Map<String, Node> variables) throws Exception {
 		
 		//
 		Function func = functions.get(fname).getInstance();
@@ -180,9 +219,9 @@ public class TupleResolver {
 		logger.debug("Node to function key:{}, hash:{}, node:{}", node.getName(), node.hashCode(), node);
 		
 		if( func instanceof FunctionVars  )
-			resl = ((FunctionVars) func).exec(node, variables, fix);
+			resl = ((FunctionVars) func).exec(node, variables);
 		else
-			resl = func.exec(node, fix);
+			resl = func.exec(node);
 		
 		logger.debug("Node return key:{}, hash:{}, node:{}", resl.getName(), resl.hashCode(), resl);
 		return resl;
