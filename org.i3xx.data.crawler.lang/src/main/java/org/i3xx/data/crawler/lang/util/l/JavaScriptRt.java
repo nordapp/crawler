@@ -8,9 +8,12 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import org.i3xx.data.crawler.lang.core.DataNodeImpl;
 import org.i3xx.data.crawler.lang.core.Function;
 import org.i3xx.data.crawler.lang.core.FunctionVars;
+import org.i3xx.data.crawler.lang.core.LeafNode;
 import org.i3xx.data.crawler.lang.core.Node;
+import org.i3xx.data.crawler.lang.core.Node.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,7 +21,7 @@ public class JavaScriptRt extends FunctionVars implements Language {
 	
 	private static final Logger logger = LoggerFactory.getLogger(JavaScriptRt.class);
 	
-	public static final String NAME = "js";
+	public static final String NAME = "javascript";
 	
 	public JavaScriptRt() {
 	}
@@ -53,7 +56,10 @@ public class JavaScriptRt extends FunctionVars implements Language {
 
 	@Override
 	public Node exec(Node node, Map<String, Node> variables) throws Exception {
-		return null;
+		
+		Object result = execute(node.getName(), ((LeafNode)node).getValue(), variables);
+		
+		return new DataNodeImpl(Type.NODE, node.getName(), "javascript", result);
 	}
 	
 }

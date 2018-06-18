@@ -55,5 +55,12 @@ public class DataNodeImpl implements DataNode{
 	public Object getData() {
 		return data;
 	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		return "data::"+name+"::'"+value+"::"+data+"'";
+	}
 
 }

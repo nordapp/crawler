@@ -37,6 +37,13 @@ public class TupleResolver {
 	}
 	
 	/**
+	 * @return
+	 */
+	public Map<String, Function> getFunctions() {
+		return functions;
+	}
+	
+	/**
 	 * @param list
 	 * @throws Exception 
 	 */
@@ -101,7 +108,10 @@ public class TupleResolver {
 			}else {
 				
 				//Update the resolved node
-				if(rsvd instanceof LeafNode) {
+				if(rsvd instanceof DataNode) {
+					rsvd = new DataNodeImpl(node.getType(), node.getName(), ((LeafNode)rsvd).getValue(),
+							((DataNode)rsvd).getData());
+				}else if(rsvd instanceof LeafNode) {
 					rsvd = new LeafNodeImpl(node.getType(), node.getName(), ((LeafNode)rsvd).getValue());
 				}else {
 					rsvd = new ListNodeImpl(node.getType(), node.getName(), ((ListNode)rsvd).getStruct());
