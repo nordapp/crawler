@@ -68,4 +68,24 @@ class JavaScriptRtTest {
 		
 	}
 
+	@Test
+	void testC() throws Exception {
+		
+		JavaScriptRt rt = new JavaScriptRt();
+		
+		String stmt = "";
+		stmt += "b.getValue();\n";
+		
+		LeafNode node = new LeafNodeImpl(Type.NODE, "test_js", stmt);
+		Map<String, Node> vars = new HashMap<String, Node>();
+		
+		vars.put("b", new LeafNodeImpl(Type.NODE, "b", "Hello World"));
+		
+		Object rs = rt.exec(node, vars);
+		
+		assertTrue( rs instanceof DataNode );
+		assertEquals( ((DataNode)rs).getName(), "test_js" );
+		assertEquals( ((DataNode)rs).getData(), "Hello World" );
+	}
+
 }

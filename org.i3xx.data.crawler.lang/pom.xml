@@ -29,13 +29,22 @@
 		<version>1.1.1</version>
 	    <scope>compile</scope>
 	</dependency>
+	<dependency>
+	    <groupId>org.frege-lang</groupId>
+	    <artifactId>frege</artifactId>
+	    <version>3.24-7.100</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.frege-lang</groupId>
+	    <artifactId>frege-interpreter-core</artifactId>
+	    <version>1.3-SNAPSHOT</version>
+	</dependency>  	
 	
 	<dependency>
 		<groupId>org.slf4j</groupId>
 		<artifactId>slf4j-api</artifactId>
 		<version>1.7.5</version>
 	</dependency>
-  	
     <dependency>
 	    <groupId>org.junit.jupiter</groupId>
 	    <artifactId>junit-jupiter-engine</artifactId>

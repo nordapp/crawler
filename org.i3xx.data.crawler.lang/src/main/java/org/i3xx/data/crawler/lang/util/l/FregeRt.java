@@ -17,13 +17,14 @@ import org.i3xx.data.crawler.lang.core.Node.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JavaScriptRt extends FunctionVars implements Language {
+public class FregeRt extends FunctionVars implements Language {
 	
-	private static final Logger logger = LoggerFactory.getLogger(JavaScriptRt.class);
+	private static final Logger logger = LoggerFactory.getLogger(FregeRt.class);
 	
-	public static final String NAME = "javascript";
+	public static final String NAME = "frege";
 	
-	public JavaScriptRt() {
+	public FregeRt() {
+		
 	}
 	
 	@Override
@@ -31,7 +32,9 @@ public class JavaScriptRt extends FunctionVars implements Language {
 		
 		try {
 			ScriptEngineManager factory  = new ScriptEngineManager();
-			ScriptEngine engine = factory.getEngineByName("nashorn");
+			ScriptEngine engine = factory.getEngineByName("frege");
+			
+			engine.eval("data Variable = Variable { value :: Object }");
 			
 			Bindings b = engine.getBindings(ScriptContext.ENGINE_SCOPE);
 			for(Map.Entry<String, Node> v : variables.entrySet()) {
@@ -39,8 +42,12 @@ public class JavaScriptRt extends FunctionVars implements Language {
 				if(key.charAt(0)=='?')
 					key = key.substring(1);
 				
-				b.put(key, new DefaultVariable(v.getKey(), variables));
+				//Frege needs type definition
+				key = key + " :: Object";
+				//b.put(key, new DefaultVariable(v.getKey(), variables));
+				b.put( key, variables.get(v.getKey()) );
 			}
+			
 			
 			Object value = engine.eval(stmt);
 			
@@ -60,16 +67,16 @@ public class JavaScriptRt extends FunctionVars implements Language {
 	}
 
 	@Override
-	public Function getInstance() {
-		return new JavaScriptRt();
-	}
-
-	@Override
 	public Node exec(Node node, Map<String, Node> variables) throws Exception {
 		
 		Object result = execute(node.getName(), ((LeafNode)node).getValue(), variables);
 		
 		return new DataNodeImpl(Type.NODE, node.getName(), NAME, result);
 	}
-	
+
+	@Override
+	public Function getInstance() {
+		return new FregeRt();
+	}
+
 }
