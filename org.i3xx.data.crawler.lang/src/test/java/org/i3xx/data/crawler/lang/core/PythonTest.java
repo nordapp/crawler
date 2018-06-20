@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.i3xx.data.crawler.lang.util.l.PythonRt;
 import org.junit.jupiter.api.Test;
 
-class FregeTest {
+class PythonTest {
 
 	@Test
 	void testA() throws Exception {
@@ -13,10 +13,11 @@ class FregeTest {
 		String stmt = "";
 		stmt += "?a Hello World\n";
 		stmt += "b ==::\n";
-		//stmt += "x = 3\n";
-		stmt += "a\n";
+		stmt += "d=a.getValue();\n";
+		stmt += "a.setValue('Test');\n";
+		stmt += "engine_return = a\n";
 		stmt += "::==\n";
-		stmt += "c (frege b)\n";
+		stmt += "c (python b)\n";
 		
 		ListNode list = new ListNodeImpl();
 		
@@ -27,10 +28,9 @@ class FregeTest {
 		r.getFunctions().put(PythonRt.NAME, new PythonRt());
 		Node n = r.resolveAndGetLast(list);
 		
-		System.out.println(n);
-		//assertTrue( n instanceof DataNodeImpl );
-		//assertEquals( n.getName(), "c");
-		//assertEquals( ((DataNode)n).getData(), "Test");
+		assertTrue( n instanceof DataNodeImpl );
+		assertEquals( n.getName(), "c");
+		assertEquals( ((DataNode)n).getData(), "Test");
 	}
 
 }

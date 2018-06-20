@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * The javascript returns the last variable set,
+ * usually you write 'a;' in the last line,
  * otherwise you can set the '$' variables direct
  * in JavaScript (Nashorn).
  * 

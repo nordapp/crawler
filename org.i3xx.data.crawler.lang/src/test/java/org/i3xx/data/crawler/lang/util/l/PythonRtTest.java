@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * The return value is the variable 'engine_return',
+ * usually you write 'engine_return = a;' in the last line,
  * otherwise you can set the '$' variables direct
  * in Phyton (Jython).
  * 
