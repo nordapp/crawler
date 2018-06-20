@@ -17,34 +17,34 @@ import org.i3xx.data.crawler.lang.core.Node.Type;
 import org.junit.jupiter.api.Test;
 
 /**
- * The javascript returns the last variable set,
+ * The return value is the variable 'engine_return',
  * otherwise you can set the '$' variables direct
- * in JavaScript (Nashorn).
+ * in Phyton (Jython).
  * 
  * Example: a.setValue(100)
  * 
  * @author green
  *
  */
-class JavaScriptRtTest {
+class PythonRtTest {
 
 	@Test
 	void testA() throws Exception {
 		
-		JavaScriptRt rt = new JavaScriptRt();
+		PythonRt rt = new PythonRt();
 		
 		String stmt = "";
-		stmt += "var a = '100';\n";
-		stmt += "a;\n";
+		stmt += "a = 'hello world'\n";
+		stmt += "print(a)\n";
 		
-		LeafNode node = new LeafNodeImpl(Type.NODE, "test_js", stmt);
+		LeafNode node = new LeafNodeImpl(Type.NODE, "test_py", stmt);
 		Map<String, Node> vars = new HashMap<String, Node>();
 		
 		Object rs = rt.exec(node, vars);
+		System.out.println(rs);
 		
 		assertTrue( rs instanceof DataNode );
-		assertEquals( ((DataNode)rs).getName(), "test_js" );
-		assertEquals( ((DataNode)rs).getData(), "100" );
+		assertEquals( ((DataNode)rs).getName(), "test_py" );
 	}
 
 	@Test
@@ -54,48 +54,48 @@ class JavaScriptRtTest {
 		String stmt = "";
 		
 		stmt += "a ==::\n";
-		stmt += "var a = 100;\n";
-		stmt += "var b = 30;\n";
-		stmt += "var c = a+b;\n";
-		stmt += "c;\n";
+		stmt += "a = 100;\n";
+		stmt += "b = 30;\n";
+		stmt += "c = a+b;\n";
+		stmt += "engine_return = c;\n";
 		stmt += "::==\n";
-		stmt += "b (javascript a)\n";
+		stmt += "b (python a)\n";
 		
 		TupleParser p = new TupleParser();
 		p.parse(list, stmt);
 		
 		TupleResolver r = new TupleResolver();
-		r.getFunctions().put(JavaScriptRt.NAME, new JavaScriptRt());
+		r.getFunctions().put(PythonRt.NAME, new PythonRt());
 		
 		Node n = r.resolveAndGetLast(list);
 		
 		assertTrue( n instanceof LeafNode );
 		assertEquals( n.getName(), "b");
-		assertEquals( ((LeafNode)n).getValue(), "javascript");
+		assertEquals( ((LeafNode)n).getValue(), "python");
 		
 		assertTrue( n instanceof DataNode );
-		assertEquals( ((DataNode)n).getData(), new Double(130));
+		assertEquals( ((DataNode)n).getData(), new Integer(130));
 		
 	}
 
 	@Test
 	void testC() throws Exception {
 		
-		JavaScriptRt rt = new JavaScriptRt();
+		PythonRt rt = new PythonRt();
 		
 		String stmt = "";
-		stmt += "b.getValue();\n";
+		stmt += "print(a.getValue())\n";
+		stmt += "a.setValue(\"hello world\")\n";
+		stmt += "engine_return = a\n";
 		
-		LeafNode node = new LeafNodeImpl(Type.NODE, "test_js", stmt);
+		LeafNode node = new LeafNodeImpl(Type.NODE, "test_py", stmt);
 		Map<String, Node> vars = new HashMap<String, Node>();
-		
-		vars.put("b", new LeafNodeImpl(Type.NODE, "b", "Hello World"));
+		vars.put("?a", new LeafNodeImpl(Type.NODE, "a", "test"));
 		
 		Object rs = rt.exec(node, vars);
 		
 		assertTrue( rs instanceof DataNode );
-		assertEquals( ((DataNode)rs).getName(), "test_js" );
-		assertEquals( ((DataNode)rs).getData(), "Hello World" );
+		assertEquals( ((DataNode)rs).getName(), "test_py" );
+		assertEquals( ((DataNode)rs).getData(), "hello world" );
 	}
-
 }

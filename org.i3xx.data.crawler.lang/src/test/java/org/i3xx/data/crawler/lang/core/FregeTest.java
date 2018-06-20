@@ -2,7 +2,7 @@ package org.i3xx.data.crawler.lang.core;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.i3xx.data.crawler.lang.util.l.FregeRt;
+import org.i3xx.data.crawler.lang.util.l.PythonRt;
 import org.junit.jupiter.api.Test;
 
 class FregeTest {
@@ -24,7 +24,7 @@ class FregeTest {
 		p.parse(list, stmt);
 
 		TupleResolver r = new TupleResolver();
-		r.getFunctions().put(FregeRt.NAME, new FregeRt());
+		r.getFunctions().put(PythonRt.NAME, new PythonRt());
 		Node n = r.resolveAndGetLast(list);
 		
 		System.out.println(n);

@@ -17,13 +17,13 @@ import org.i3xx.data.crawler.lang.core.Node.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FregeRt extends FunctionVars implements Language {
+public class PythonRt extends FunctionVars implements Language {
 	
-	private static final Logger logger = LoggerFactory.getLogger(FregeRt.class);
+	private static final Logger logger = LoggerFactory.getLogger(PythonRt.class);
 	
-	public static final String NAME = "frege";
+	public static final String NAME = "python";
 	
-	public FregeRt() {
+	public PythonRt() {
 		
 	}
 	
@@ -32,9 +32,7 @@ public class FregeRt extends FunctionVars implements Language {
 		
 		try {
 			ScriptEngineManager factory  = new ScriptEngineManager();
-			ScriptEngine engine = factory.getEngineByName("frege");
-			
-			engine.eval("data Variable = Variable { value :: Object }");
+			ScriptEngine engine = factory.getEngineByName("jython");
 			
 			Bindings b = engine.getBindings(ScriptContext.ENGINE_SCOPE);
 			for(Map.Entry<String, Node> v : variables.entrySet()) {
@@ -42,14 +40,11 @@ public class FregeRt extends FunctionVars implements Language {
 				if(key.charAt(0)=='?')
 					key = key.substring(1);
 				
-				//Frege needs type definition
-				key = key + " :: Object";
-				//b.put(key, new DefaultVariable(v.getKey(), variables));
-				b.put( key, variables.get(v.getKey()) );
+				b.put( key, new DefaultVariable(v.getKey(), variables) );
 			}
 			
-			
-			Object value = engine.eval(stmt);
+			engine.eval(stmt);
+			Object value = engine.get("engine_return");
 			
 			//do not return a DefaultVariable
 			if(value instanceof DefaultVariable)
@@ -76,7 +71,7 @@ public class FregeRt extends FunctionVars implements Language {
 
 	@Override
 	public Function getInstance() {
-		return new FregeRt();
+		return new PythonRt();
 	}
 
 }
