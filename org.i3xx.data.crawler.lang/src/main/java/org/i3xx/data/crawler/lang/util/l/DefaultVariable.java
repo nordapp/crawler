@@ -2,6 +2,7 @@ package org.i3xx.data.crawler.lang.util.l;
 
 import java.util.Map;
 
+import org.i3xx.data.crawler.lang.core.Accent;
 import org.i3xx.data.crawler.lang.core.DataNode;
 import org.i3xx.data.crawler.lang.core.DataNodeImpl;
 import org.i3xx.data.crawler.lang.core.LeafNode;
@@ -38,7 +39,7 @@ public class DefaultVariable {
 	 * @param value
 	 */
 	public void setValue(Object value) {
-		if(name.charAt(0)!='?')
+		if(name.charAt(0)!=Accent.CHANGE)
 			throw new UnsupportedOperationException("The variable '"+name+"' is unmodifyable."); 
 		
 		//do not set a DefaultVariable

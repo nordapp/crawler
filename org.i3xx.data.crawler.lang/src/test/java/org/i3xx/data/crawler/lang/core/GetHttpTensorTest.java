@@ -18,8 +18,8 @@ class GetHttpTensorTest {
 		stmt += "host http://192.168.214.146:8086\n";
 		stmt += "addr $host;/if/get-latest-worknumber\n";
 		stmt += "resolve addr\n";
-		stmt += "gethttp~ addr\n";
-		stmt += "~jxpath gethttp\n";
+		stmt += "gethttp: addr\n";
+		stmt += ":jxpath gethttp\n";
 		stmt += "resolve jxpath\n";
 		stmt += "jxpath /result/content/@value\n";
 		

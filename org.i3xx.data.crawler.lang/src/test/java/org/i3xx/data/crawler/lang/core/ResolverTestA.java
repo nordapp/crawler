@@ -217,13 +217,13 @@ class ResolverTestA {
 		ListNode list = new ListNodeImpl();
 		String stmt = "";
 		
-		stmt += "?a ==XXX::\n";
+		stmt += "~a ==XXX::\n";
 		stmt += "This\n";
 		stmt += "is\n";
 		stmt += "a\n";
 		stmt += "test\n";
 		stmt += "::XXX==\n";
-		stmt += "resolve ?a\n";
+		stmt += "resolve ~a\n";
 		
 		TupleParser p = new TupleParser();
 		p.parse(list, stmt);
@@ -244,13 +244,13 @@ class ResolverTestA {
 		ListNode list = new ListNodeImpl();
 		String stmt = "";
 		
-		stmt += "?a ==::\n";
+		stmt += "~a ==::\n";
 		stmt += "This\n";
 		stmt += "is\n";
 		stmt += "a\n";
 		stmt += "test\n";
 		stmt += "::==\n";
-		stmt += "resolve ?a\n";
+		stmt += "resolve ~a\n";
 		
 		TupleParser p = new TupleParser();
 		p.parse(list, stmt);

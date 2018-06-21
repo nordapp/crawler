@@ -91,7 +91,7 @@ class PythonRtTest {
 		
 		LeafNode node = new LeafNodeImpl(Type.NODE, "test_py", stmt);
 		Map<String, Node> vars = new HashMap<String, Node>();
-		vars.put("?a", new LeafNodeImpl(Type.NODE, "a", "test"));
+		vars.put("~a", new LeafNodeImpl(Type.NODE, "a", "test"));
 		
 		Object rs = rt.exec(node, vars);
 		

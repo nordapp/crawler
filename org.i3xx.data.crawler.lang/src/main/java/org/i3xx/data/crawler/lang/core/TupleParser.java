@@ -83,7 +83,7 @@ public class TupleParser {
 				Node node = null;
 				Type type = Type.NODE;
 				
-				if(tp[0].startsWith("~")) {
+				if(tp[0].startsWith(":")) {
 					tp[0] = tp[0].substring(1);
 					type = Type.SET;
 				}else if(tp[0].startsWith("^")) {

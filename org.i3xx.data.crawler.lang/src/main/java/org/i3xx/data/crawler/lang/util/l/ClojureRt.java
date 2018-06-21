@@ -18,13 +18,13 @@ import org.i3xx.data.crawler.lang.core.Node.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PythonRt extends FunctionVars implements Language {
+public class ClojureRt extends FunctionVars implements Language {
 	
-	private static final Logger logger = LoggerFactory.getLogger(PythonRt.class);
+	private static final Logger logger = LoggerFactory.getLogger(ClojureRt.class);
 	
-	public static final String NAME = "python";
+	public static final String NAME = "clojure";
 	
-	public PythonRt() {
+	public ClojureRt() {
 		
 	}
 	
@@ -33,7 +33,7 @@ public class PythonRt extends FunctionVars implements Language {
 		
 		try {
 			ScriptEngineManager factory  = new ScriptEngineManager();
-			ScriptEngine engine = factory.getEngineByName("jython");
+			ScriptEngine engine = factory.getEngineByName("Clojure");
 			
 			Bindings b = engine.getBindings(ScriptContext.ENGINE_SCOPE);
 			for(Map.Entry<String, Node> v : variables.entrySet()) {
@@ -44,8 +44,7 @@ public class PythonRt extends FunctionVars implements Language {
 				b.put( key, new DefaultVariable(v.getKey(), variables) );
 			}
 			
-			engine.eval(stmt);
-			Object value = engine.get("engine_return");
+			Object value = engine.eval(stmt);
 			
 			//do not return a DefaultVariable
 			if(value instanceof DefaultVariable)
@@ -72,7 +71,7 @@ public class PythonRt extends FunctionVars implements Language {
 
 	@Override
 	public Function getInstance() {
-		return new PythonRt();
+		return new ClojureRt();
 	}
 
 }

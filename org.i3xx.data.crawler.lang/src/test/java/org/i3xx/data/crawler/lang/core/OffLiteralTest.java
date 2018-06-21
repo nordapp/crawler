@@ -13,8 +13,8 @@ class OffLiteralTest {
 		ListNode list = new ListNodeImpl();
 		String stmt = "";
 		
-		stmt += "?a \"Test\"\n";
-		stmt += "offliteral ?a\n";
+		stmt += "~a \"Test\"\n";
+		stmt += "offliteral ~a\n";
 		
 		TupleParser p = new TupleParser();
 		p.parse(list, stmt);
@@ -33,9 +33,9 @@ class OffLiteralTest {
 		ListNode list = new ListNodeImpl();
 		String stmt = "";
 		
-		stmt += "?a \"Test\"\n";
-		stmt += "offliteral ?a\n";
-		stmt += "print ?a\n";
+		stmt += "~a \"Test\"\n";
+		stmt += "offliteral ~a\n";
+		stmt += "print ~a\n";
 		
 		TupleParser p = new TupleParser();
 		p.parse(list, stmt);

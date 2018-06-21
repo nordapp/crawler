@@ -38,7 +38,7 @@ class GitHubPropsTest {
 		
 		stmt += "host http://192.168.214.120:10080/config/primary/raw/master\n";
 		stmt += "addr ( resolve $host;/custom/monades-test.properties )\n";
-		stmt += "gitprops~ addr\n";
+		stmt += "gitprops: addr\n";
 		
 		TupleParser p = new TupleParser();
 		p.parse(list, stmt);

@@ -8,6 +8,7 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import org.i3xx.data.crawler.lang.core.Accent;
 import org.i3xx.data.crawler.lang.core.DataNodeImpl;
 import org.i3xx.data.crawler.lang.core.Function;
 import org.i3xx.data.crawler.lang.core.FunctionVars;
@@ -36,7 +37,7 @@ public class JavaScriptRt extends FunctionVars implements Language {
 			Bindings b = engine.getBindings(ScriptContext.ENGINE_SCOPE);
 			for(Map.Entry<String, Node> v : variables.entrySet()) {
 				String key = v.getKey();
-				if(key.charAt(0)=='?')
+				if(key.charAt(0)==Accent.CHANGE)
 					key = key.substring(1);
 				
 				b.put(key, new DefaultVariable(v.getKey(), variables));

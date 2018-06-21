@@ -143,7 +143,7 @@ public class TupleResolver {
 				String name = result.getName();
 				if(depth==0) {
 					String n = ((LeafNode)node).getValue();
-					if(n.charAt(0)=='?')
+					if(n.charAt(0)==Accent.CHANGE)
 						name = n;
 				}
 				putVar(name, result, depth, variables);
@@ -176,7 +176,7 @@ public class TupleResolver {
 		//Ein explizites Set liegt im Falle einer inneren Zuweisung vor
 		if(node.getType()==Node.Type.SET ){
 			logger.debug("Set variable key:{}, hash:{}, node:{}", name, node.hashCode(), node);
-			if(variables.containsKey(name) && name.charAt(0)!='?')
+			if(variables.containsKey(name) && name.charAt(0)!=Accent.CHANGE)
 				throw new UnsupportedOperationException("The variable '"+name+"' is unmodifyable.");
 			
 			variables.put(name, node);
@@ -184,7 +184,7 @@ public class TupleResolver {
 		//oder ein explizites Set liegt im Falle einer inneren Zuweisung vor
 		else if(node.getType()==Node.Type.RESOLVE){
 			logger.debug("Set(^) variable key:{}, hash:{}, node:{}", name, node.hashCode(), node);
-			if(variables.containsKey(name) && name.charAt(0)!='?')
+			if(variables.containsKey(name) && name.charAt(0)!=Accent.CHANGE)
 				throw new UnsupportedOperationException("The variable '"+name+"' is unmodifyable.");
 			
 			variables.put(name, node);
@@ -192,7 +192,7 @@ public class TupleResolver {
 		//oder eine Zuweisung nur auf Ebene '0'
 		else if(depth==0) {
 			logger.debug("Set variable key:{}, hash:{}, node:{}", name, node.hashCode(), node);
-			if(variables.containsKey(name) && name.charAt(0)!='?')
+			if(variables.containsKey(name) && name.charAt(0)!=Accent.CHANGE)
 				throw new UnsupportedOperationException("The variable '"+name+"' is unmodifyable.");
 			
 			variables.put(name, node);

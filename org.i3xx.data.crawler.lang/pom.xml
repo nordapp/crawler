@@ -10,7 +10,6 @@
   </properties>
   
   <dependencies>
-	<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
 	<dependency>
 	    <groupId>org.apache.httpcomponents</groupId>
 	    <artifactId>httpclient</artifactId>
@@ -29,10 +28,21 @@
 		<version>1.1.1</version>
 	    <scope>compile</scope>
 	</dependency>
+	
 	<dependency>
 	    <groupId>org.python</groupId>
 	    <artifactId>jython</artifactId>
 	    <version>2.5.3</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.clojure</groupId>
+	    <artifactId>clojure</artifactId>
+	    <version>1.9.0</version>
+	</dependency>
+	<dependency>
+	    <groupId>clojure-jsr223</groupId>
+	    <artifactId>clojure-jsr223</artifactId>
+	    <version>1.2</version>
 	</dependency>
 	
 	<dependency>

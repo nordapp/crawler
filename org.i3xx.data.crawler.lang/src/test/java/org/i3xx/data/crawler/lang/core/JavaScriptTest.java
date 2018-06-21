@@ -12,7 +12,7 @@ class JavaScriptTest {
 	void testA() throws Exception {
 		
 		String stmt = "";
-		stmt += "?a Hello World\n";
+		stmt += "~a Hello World\n";
 		stmt += "b ==::\n";
 		stmt += "d=a.getValue();\n";
 		stmt += "a.setValue('Test');\n";
