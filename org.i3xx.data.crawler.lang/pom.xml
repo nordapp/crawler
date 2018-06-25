@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.i3xx.data.crawler</groupId>
-  <artifactId>org.i3xx.data.crawler.lang</artifactId>
+  <groupId>org.i3xx.lemonade</groupId>
+  <artifactId>org.i3xx.lemonade.lang</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>Nordapp :: Data :: Crawler</name>
+  <name>Nordapp :: Lemonade</name>
   
   <properties>
   	<project.inceptionYear>2018</project.inceptionYear>
