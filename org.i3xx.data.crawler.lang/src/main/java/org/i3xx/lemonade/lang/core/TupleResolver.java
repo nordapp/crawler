@@ -177,7 +177,7 @@ public class TupleResolver {
 		
 		//Ein explizites Set liegt im Falle einer inneren Zuweisung vor
 		if(node.getType()==Node.Type.SET ){
-			logger.debug("Set variable key:{}, hash:{}, node:{}", name, node.hashCode(), node);
+			logger.debug("Set(:) variable key:{}, hash:{}, node:{}", name, node.hashCode(), node);
 			if(variables.containsKey(name) && name.charAt(0)!=Accent.CHANGE)
 				throw new UnsupportedOperationException("The variable '"+name+"' is unmodifyable.");
 			

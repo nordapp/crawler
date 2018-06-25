@@ -60,7 +60,7 @@ public class DataNodeImpl implements DataNode{
 	 * @see java.lang.Object#toString()
 	 */
 	public String toString() {
-		return "data::"+name+"::'"+value+"::"+data+"'";
+		return "data::"+name+"::'"+value+"'::'"+data+"'";
 	}
 
 }

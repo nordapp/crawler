@@ -37,11 +37,16 @@ public class ResolveVariables extends FunctionVars {
 		
 		String text = ((LeafNode)node).getValue();
 		
+		//TODO: Is this functionality right here?
 		//Move, if the text is a node name and the node is no LeafNode
 		if(variables.containsKey(text)) {
 			Node v = variables.get(text);
 			if(v instanceof ListNode) {
-				return NodeTools.newListNode(Type.NODE, Node.UNKNOWN, ((ListNode)v).getStruct().get(0));
+				String name = Node.UNKNOWN;
+				if(variables.containsKey(v.getName())) {
+					name = v.getName();
+				}
+				return NodeTools.newListNode(Type.NODE, name, ((ListNode)v).getStruct().get(0));
 			}
 		}
 		
@@ -57,7 +62,12 @@ public class ResolveVariables extends FunctionVars {
 			text = resl;
 		}//for
 		
-		return new LeafNodeImpl(Type.NODE, Node.UNKNOWN, text);
+		//variable
+		String name = Node.UNKNOWN;
+		if(variables.containsKey(node.getName())) {
+			name = node.getName();
+		}
+		return new LeafNodeImpl(Type.NODE, name, text);
 	}
 
 }

@@ -15,8 +15,8 @@ public abstract class FunctionVars implements Function {
 	}
 	
 	/**
-	 * @param node
-	 * @param variables
+	 * @param node The parameter node, this is the value of the tuple.
+	 * @param variables The variable mapping
 	 * @return
 	 * @throws Exception
 	 */
