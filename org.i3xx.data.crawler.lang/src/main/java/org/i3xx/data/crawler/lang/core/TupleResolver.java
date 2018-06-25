@@ -140,6 +140,7 @@ public class TupleResolver {
 				result = funcExec(node.getName(), (LeafNode)node, variables);
 				//### some sugar ###
 				//In case of depth 0, variable name instead of result.getName() 'unknown'
+				//if the variable is changeable (not final).
 				String name = result.getName();
 				if(depth==0) {
 					String n = ((LeafNode)node).getValue();
@@ -219,7 +220,7 @@ public class TupleResolver {
 		if(variables.containsKey(key)) {
 			node = variables.get(key);
 			logger.debug("Get variable by function name:{}, key:{}, hash:{}",
-					fname, key, node.hashCode(), node);
+					fname, key, node.hashCode());
 		}
 		
 		//Structure nodes allowed, sh 11.06
@@ -235,5 +236,16 @@ public class TupleResolver {
 		
 		logger.debug("Node return key:{}, hash:{}, node:{}", resl.getName(), resl.hashCode(), resl);
 		return resl;
+	}
+	
+	/**
+	 * @param leaf
+	 * @return
+	 */
+	@SuppressWarnings("unused")
+	private boolean isVariable(LeafNode leaf, Map<String, Node> variables) {
+		String key = leaf.getValue();
+		
+		return ( variables.containsKey(key) && key.charAt(0)==Accent.CHANGE );
 	}
 }

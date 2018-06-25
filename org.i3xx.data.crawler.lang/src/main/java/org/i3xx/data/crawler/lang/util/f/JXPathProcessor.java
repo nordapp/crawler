@@ -12,6 +12,8 @@ import org.i3xx.data.crawler.lang.core.LeafNodeImpl;
 import org.i3xx.data.crawler.lang.core.Node;
 import org.i3xx.data.crawler.lang.core.Node.Type;
 import org.i3xx.data.crawler.lang.util.f.json.ScratchPointerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JXPath processing of the intern data struct. Used to put a specified
@@ -21,6 +23,8 @@ import org.i3xx.data.crawler.lang.util.f.json.ScratchPointerFactory;
  *
  */
 public class JXPathProcessor extends FunctionVars {
+	
+	private static final Logger logger = LoggerFactory.getLogger(JXPathProcessor.class);
 	
 	public static final String NAME = "jxpath";
 	
@@ -38,6 +42,7 @@ public class JXPathProcessor extends FunctionVars {
 		String key = param.getName();
 		
 		Node val = variables.get(key);
+		logger.debug("The path: {}, variable: {}.", path, val);
 		if(val==null)
 			throw new IllegalArgumentException("The variable '"+key+"' is not available.");
 		
