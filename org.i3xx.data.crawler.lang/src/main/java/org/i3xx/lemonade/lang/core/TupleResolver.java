@@ -8,6 +8,7 @@ import java.util.List;
 import org.i3xx.lemonade.lang.core.Node.Type;
 import org.i3xx.lemonade.lang.util.BuiltinFunctions;
 import org.i3xx.lemonade.lang.util.f.ResolveVariables;
+import org.i3xx.lemonade.lang.util.f.UnshiftData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -140,6 +141,11 @@ public class TupleResolver {
 				//and set the result to the parameter map
 				result = funcExec(node.getName(), (LeafNode)node, variables);
 				//### some sugar ###
+				//In case of unshift
+				if(node.getType()==Type.UNSHIFT) {
+					Function func = functions.get(UnshiftData.NAME).getInstance();
+					result = func.exec(result);
+				}
 				//In case of depth 0, variable name instead of result.getName() 'unknown'
 				//if the variable is changeable (not final).
 				String name = result.getName();

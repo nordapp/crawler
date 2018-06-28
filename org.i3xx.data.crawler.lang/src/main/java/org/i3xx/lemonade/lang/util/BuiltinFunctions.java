@@ -14,6 +14,7 @@ import org.i3xx.lemonade.lang.util.f.PrintOut;
 import org.i3xx.lemonade.lang.util.f.ResolveVariables;
 import org.i3xx.lemonade.lang.util.f.ReturnResult;
 import org.i3xx.lemonade.lang.util.f.UnpackLiteral;
+import org.i3xx.lemonade.lang.util.f.UnshiftData;
 import org.i3xx.lemonade.lang.util.l.ClojureRt;
 import org.i3xx.lemonade.lang.util.l.JavaScriptRt;
 import org.i3xx.lemonade.lang.util.l.LemonadeRt;
@@ -34,6 +35,7 @@ public class BuiltinFunctions {
 		functions.put(ResolveVariables.NAME, new ResolveVariables());
 		functions.put(ReturnResult.NAME, new ReturnResult());
 		functions.put(UnpackLiteral.NAME, new UnpackLiteral());
+		functions.put(UnshiftData.NAME, new UnshiftData());
 		
 		functions.put(ClojureRt.NAME, new ClojureRt());
 		functions.put(LemonadeRt.NAME, new LemonadeRt());

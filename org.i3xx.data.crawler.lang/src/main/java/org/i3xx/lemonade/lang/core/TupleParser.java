@@ -99,6 +99,9 @@ public class TupleParser {
 				}else if(tp[0].startsWith("^")) {
 					tp[0] = tp[0].substring(1);
 					type = Type.RESOLVE;
+				}else if(tp[0].startsWith("<")) {
+					tp[0] = tp[0].substring(1);
+					type = Type.UNSHIFT;
 				}
 				
 				if(tp[1].startsWith("(") && tp[1].endsWith(")")) {

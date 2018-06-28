@@ -7,7 +7,7 @@ public interface Node {
 	 * 
 	 * @author green
 	 */
-	public enum Type { NODE, SET, RESOLVE }
+	public enum Type { NODE, SET, RESOLVE, UNSHIFT }
 	
 	/**
 	 * The name of a node created by a function

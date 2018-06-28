@@ -3,7 +3,6 @@ package org.i3xx.lemonade.lang.util.l;
 import java.io.IOException;
 import java.util.Map;
 
-import org.i3xx.lemonade.lang.core.Accent;
 import org.i3xx.lemonade.lang.core.DataNode;
 import org.i3xx.lemonade.lang.core.DataNodeImpl;
 import org.i3xx.lemonade.lang.core.Function;
@@ -12,10 +11,10 @@ import org.i3xx.lemonade.lang.core.LeafNode;
 import org.i3xx.lemonade.lang.core.ListNode;
 import org.i3xx.lemonade.lang.core.ListNodeImpl;
 import org.i3xx.lemonade.lang.core.Node;
+import org.i3xx.lemonade.lang.core.Node.Type;
 import org.i3xx.lemonade.lang.core.ScriptException;
 import org.i3xx.lemonade.lang.core.TupleParser;
 import org.i3xx.lemonade.lang.core.TupleResolver;
-import org.i3xx.lemonade.lang.core.Node.Type;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,14 +38,7 @@ public class LemonadeRt extends FunctionVars implements Language {
 			parser.parse(list, stmt);
 			
 			TupleResolver resolver = new TupleResolver();
-			
-			for(Map.Entry<String, Node> v : variables.entrySet()) {
-				String key = v.getKey();
-				if(key.charAt(0)==Accent.CHANGE)
-					key = key.substring(1);
-				
-				resolver.getVariables().putAll(variables);
-			}
+			resolver.getVariables().putAll(variables);
 			
 			Node node = resolver.resolveAndGetLast(list);
 			
