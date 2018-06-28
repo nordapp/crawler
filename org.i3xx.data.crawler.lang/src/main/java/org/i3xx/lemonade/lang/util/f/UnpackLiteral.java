@@ -1,12 +1,14 @@
 package org.i3xx.lemonade.lang.util.f;
 
-import org.i3xx.lemonade.lang.core.Function;
-import org.i3xx.lemonade.lang.core.LeafNode;
-import org.i3xx.lemonade.lang.core.LeafNodeImpl;
-import org.i3xx.lemonade.lang.core.Node;
-import org.i3xx.lemonade.lang.core.Node.Type;
+import java.util.Map;
 
-public class UnpackLiteral implements Function {
+import org.i3xx.lemonade.lang.core.Function;
+import org.i3xx.lemonade.lang.core.FunctionVars;
+import org.i3xx.lemonade.lang.core.LeafNode;
+import org.i3xx.lemonade.lang.core.Node;
+import org.i3xx.lemonade.lang.util.NodeTools;
+
+public class UnpackLiteral extends FunctionVars {
 	
 	public static final String NAME = "offliteral";
 	
@@ -16,7 +18,7 @@ public class UnpackLiteral implements Function {
 	}
 	
 	@Override
-	public Node exec(Node node) throws Exception {
+	public Node exec(Node node, Map<String, Node> variables) throws Exception {
 		
 		LeafNode param = (LeafNode)node;
 		String text = param.getValue();
@@ -33,7 +35,7 @@ public class UnpackLiteral implements Function {
 			}
 		}//fi
 		
-		return new LeafNodeImpl(Type.NODE, Node.UNKNOWN, text);
+		return NodeTools.createUnknownLeaf(node, text, variables);
 	}
 
 }
