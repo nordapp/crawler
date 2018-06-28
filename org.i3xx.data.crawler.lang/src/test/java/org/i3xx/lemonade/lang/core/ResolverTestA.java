@@ -241,7 +241,7 @@ class ResolverTestA {
 		final String c = System.lineSeparator();
 		
 		assertTrue( n instanceof LeafNodeImpl );
-		assertEquals( n.getName(), "unknown");
+		assertEquals( n.getName(), "~a");
 		assertEquals( ((LeafNode)n).getValue(), "This"+c+"is"+c+"a"+c+"test"+c);
 	}
 	
@@ -268,7 +268,7 @@ class ResolverTestA {
 		final String c = System.lineSeparator();
 		
 		assertTrue( n instanceof LeafNodeImpl );
-		assertEquals( n.getName(), "unknown");
+		assertEquals( n.getName(), "~a");
 		assertEquals( ((LeafNode)n).getValue(), "This"+c+"is"+c+"a"+c+"test"+c);
 	}
 

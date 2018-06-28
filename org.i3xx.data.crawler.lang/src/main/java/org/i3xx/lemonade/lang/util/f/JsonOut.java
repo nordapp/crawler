@@ -2,10 +2,9 @@ package org.i3xx.lemonade.lang.util.f;
 
 import org.i3xx.lemonade.lang.core.Function;
 import org.i3xx.lemonade.lang.core.LeafNode;
-import org.i3xx.lemonade.lang.core.LeafNodeImpl;
 import org.i3xx.lemonade.lang.core.ListNode;
 import org.i3xx.lemonade.lang.core.Node;
-import org.i3xx.lemonade.lang.core.Node.Type;
+import org.i3xx.lemonade.lang.util.NodeTools;
 
 /**
  * Print out the intern data to a JSON String
@@ -28,7 +27,7 @@ public class JsonOut implements Function {
 		StringBuffer buf = new StringBuffer();
 		print(node, buf, 0);
 		
-		return new LeafNodeImpl(Type.NODE, Node.UNKNOWN, buf.toString());
+		return NodeTools.createUnknownLeaf( buf.toString() );
 	}
 	
 	private void print(Node node, StringBuffer buf, int depth) {

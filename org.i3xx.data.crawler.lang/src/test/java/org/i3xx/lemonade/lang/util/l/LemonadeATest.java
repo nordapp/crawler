@@ -1,16 +1,15 @@
 package org.i3xx.lemonade.lang.util.l;
 
-import java.util.HashMap;
-import java.util.Map;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.i3xx.lemonade.lang.core.LeafNode;
-import org.i3xx.lemonade.lang.core.LeafNodeImpl;
+import org.i3xx.lemonade.lang.core.DataNode;
+import org.i3xx.lemonade.lang.core.DataNodeImpl;
 import org.i3xx.lemonade.lang.core.ListNode;
 import org.i3xx.lemonade.lang.core.ListNodeImpl;
 import org.i3xx.lemonade.lang.core.Node;
 import org.i3xx.lemonade.lang.core.TupleParser;
 import org.i3xx.lemonade.lang.core.TupleResolver;
-import org.i3xx.lemonade.lang.core.Node.Type;
 import org.junit.jupiter.api.Test;
 
 class LemonadeATest {
@@ -18,7 +17,21 @@ class LemonadeATest {
 	@Test
 	void test() throws Exception {
 		
-		String stmt = URLTool.readText( LemonadeATest.class.getResource("ATest.lem") );
+		String stmt = "";
+		stmt += "~a ==::\n";
+		stmt += "	#\n";
+		stmt += "	~a Hallo\n";
+		stmt += "	~b $~a; Welt\n";
+		stmt += "	resolve ~b\n";
+		stmt += "	return ~b\n";
+		stmt += "::==\n";
+
+		stmt += "~c ==1::\n";
+		stmt += "	lemonade ~a\n";
+		stmt += "	return ~a\n";
+		stmt += "::1==\n";
+
+		stmt += "lemonade ~c\n";
 		
 		ListNode list = new ListNodeImpl();
 		
@@ -28,23 +41,10 @@ class LemonadeATest {
 		TupleResolver r = new TupleResolver();
 		r.getFunctions().put(LemonadeRt.NAME, new LemonadeRt());
 		Node n = r.resolveAndGetLast(list);
-		System.out.println(n);
+		
+		assertTrue( n instanceof DataNodeImpl );
+		assertEquals( n.getName(), "~c");
+		assertEquals( ((DataNode)n).getData(), "Hallo Welt");
 		
 	}
-
-	@Test
-	void testB() throws Exception {
-		
-		String stmt = URLTool.readText( LemonadeATest.class.getResource("ATest.lem") );
-		
-		LemonadeRt rt = new LemonadeRt();
-		
-		LeafNode node = new LeafNodeImpl(Type.NODE, "test_lem", stmt);
-		Map<String, Node> vars = new HashMap<String, Node>();
-		
-		Object rs = rt.exec(node, vars);
-		System.out.println(rs);
-		
-	}
-
 }

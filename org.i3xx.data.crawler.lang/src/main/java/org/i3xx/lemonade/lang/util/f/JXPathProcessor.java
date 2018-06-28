@@ -61,6 +61,8 @@ public class JXPathProcessor extends FunctionVars {
 		if(result==null)
 			throw new IllegalArgumentException("The path '"+path+"' is not available.");
 		
+		// A valid result is well known.
+		
 		String name = Node.UNKNOWN;
 		if (ptr.getNode() instanceof Node) {
 			String n = ((Node)ptr.getNode()).getName();

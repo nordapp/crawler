@@ -5,10 +5,7 @@ import java.util.Map;
 import org.i3xx.lemonade.lang.core.Function;
 import org.i3xx.lemonade.lang.core.FunctionVars;
 import org.i3xx.lemonade.lang.core.LeafNode;
-import org.i3xx.lemonade.lang.core.LeafNodeImpl;
-import org.i3xx.lemonade.lang.core.ListNode;
 import org.i3xx.lemonade.lang.core.Node;
-import org.i3xx.lemonade.lang.core.Node.Type;
 import org.i3xx.lemonade.lang.util.NodeTools;
 import org.i3xx.lemonade.lang.util.StringTools;
 
@@ -37,21 +34,7 @@ public class ResolveVariables extends FunctionVars {
 		
 		String text = ((LeafNode)node).getValue();
 		
-		//TODO: Is this functionality right here?
-		//Move, if the text is a node name and the node is no LeafNode
-		if(variables.containsKey(text)) {
-			Node v = variables.get(text);
-			if(v instanceof ListNode) {
-				String name = Node.UNKNOWN;
-				if(variables.containsKey(v.getName())) {
-					name = v.getName();
-				}
-				return NodeTools.newListNode(Type.NODE, name, ((ListNode)v).getStruct().get(0));
-			}
-		}
-		
 		//Resolve
-		
 		for(int i=0;i<100;i++) {
 			String resl = StringTools.replace(text, variables);
 			if( text.equals(resl) )
@@ -63,11 +46,7 @@ public class ResolveVariables extends FunctionVars {
 		}//for
 		
 		//variable
-		String name = Node.UNKNOWN;
-		if(variables.containsKey(node.getName())) {
-			name = node.getName();
-		}
-		return new LeafNodeImpl(Type.NODE, name, text);
+		return NodeTools.createUnknownLeaf(node, text, variables);
 	}
 
 }

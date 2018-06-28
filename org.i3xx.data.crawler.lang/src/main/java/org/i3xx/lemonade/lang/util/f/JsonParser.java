@@ -47,7 +47,8 @@ public class JsonParser implements Function {
 		JnContentResolver jr = new JnContentResolver(temp);
 		jr.process(null, obj);
 		
-		//The first object node is appended, this is the variable
+		//The first object node is appended, this is the variable, the 'unknown' node
+		//will be thrown away.
 		return temp;
 	}
 

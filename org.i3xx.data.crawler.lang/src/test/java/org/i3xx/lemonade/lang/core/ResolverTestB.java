@@ -97,7 +97,7 @@ class ResolverTestB {
 		Node n = r.resolveAndGetLast(list);
 		
 		assertTrue( n instanceof LeafNodeImpl );
-		assertEquals( n.getName(), "unknown");
+		assertEquals( n.getName(), "b");
 		assertEquals( ((LeafNode)n).getValue(), "hello world");
 	}
 

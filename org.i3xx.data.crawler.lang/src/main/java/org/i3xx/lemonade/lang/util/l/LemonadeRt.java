@@ -50,12 +50,13 @@ public class LemonadeRt extends FunctionVars implements Language {
 			
 			Node node = resolver.resolveAndGetLast(list);
 			
-			if( node instanceof LeafNode) {
-				return ((LeafNode)node).getValue();
+			// A DataNode is a LeafNode !!!
+			if( node instanceof DataNode) {
+				return ((DataNode)node).getData();
 			}else if( node instanceof ListNode) {
 				return ((ListNode)node).getStruct().get(0);
-			}else if( node instanceof DataNode) {
-				return ((DataNode)node).getData();
+			}else if( node instanceof LeafNode) {
+				return ((LeafNode)node).getValue();
 			}else {
 				//should not happen
 				throw new ScriptException("Undefined return type. Fix it in the java code: "+node, 1, stmt);

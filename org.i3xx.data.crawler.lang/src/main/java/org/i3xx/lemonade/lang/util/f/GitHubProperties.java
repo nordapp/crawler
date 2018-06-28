@@ -21,6 +21,7 @@ import org.i3xx.lemonade.lang.core.LeafNode;
 import org.i3xx.lemonade.lang.core.LeafNodeImpl;
 import org.i3xx.lemonade.lang.core.Node;
 import org.i3xx.lemonade.lang.core.Node.Type;
+import org.i3xx.lemonade.lang.util.NodeTools;
 
 /**
  * Reads one property file from git and insert the properties to the variables map.
@@ -73,8 +74,8 @@ public class GitHubProperties extends FunctionVars {
 			}//for
 		}//fi
 		
-		LeafNode temp = new LeafNodeImpl(Type.NODE, Node.UNKNOWN, properties==null?"":properties);
-		return temp;
+		//The variables are set above in the code. Do not set any node twice.
+		return NodeTools.createUnknownLeaf(properties==null?"":properties);
 	}
 
 }
