@@ -30,7 +30,7 @@ class OffLiteralTest {
 		Node n = r.resolveAndGetLast(list);
 		
 		assertTrue( n instanceof LeafNodeImpl );
-		assertEquals( n.getName(), "unknown");
+		assertEquals( n.getName(), "~a");
 		assertEquals( ((LeafNode)n).getValue(), "Test");
 	}
 
