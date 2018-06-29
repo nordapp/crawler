@@ -92,11 +92,13 @@ public class TupleResolver {
 		
 		Node result = null;
 		
+		// The data is a list
 		if(node instanceof ListNode) {
 			
 			Node strc = ((ListNode)node).getStruct().get(0);
 			Node rsvd = resolveMonad( strc, variables, depth+1, lncnt);
 			
+			// A function
 			if(functions.containsKey(node.getName())) {
 				
 				//Always resolves to leaf !!!
@@ -107,8 +109,10 @@ public class TupleResolver {
 				//and set the result to the parameter map
 				result = funcExec(node.getName(), (LeafNode)rsvd, variables);
 				putVar(result.getName(), result, depth, variables);
-			}else {
-				
+			}
+			
+			// A variable set
+			else {
 				//Update the resolved node
 				if(rsvd instanceof DataNode) {
 					rsvd = new DataNodeImpl(node.getType(), node.getName(), ((LeafNode)rsvd).getValue(),
@@ -119,47 +123,94 @@ public class TupleResolver {
 					rsvd = new ListNodeImpl(node.getType(), node.getName(), ((ListNode)rsvd).getStruct());
 				}
 				
+				//### some sugar ###
+				//<~a (lemonade a)
+				//In case of unshift, unshift the function's result
+				if(node.getType()==Type.UNSHIFT) {
+					Function func = functions.get(UnshiftData.NAME).getInstance();
+					rsvd = func.exec(rsvd);
+				}
+				//###
+				
 				//Set the value to the parameter map
 				putVar(node.getName(), rsvd, depth, variables);
 				//variables.put(n.getName(), r);
 				result = rsvd;
 			}
-		}else{
+		}
+		
+		// The data is a leaf node
+		else{
+			
+			// The accent ':'
 			if(node.getType()==Type.SET) {
 				//Set the result to the parameter map
 				result = new LeafNodeImpl(node.getType(), node.getName(), ((LeafNode)node).getValue());
 				putVar(result.getName(), result, depth, variables);
-			}else if(node.getType()==Type.RESOLVE) {
+			}
+			
+			// The accent '^'
+			else if(node.getType()==Type.RESOLVE) {
 				//Set the result to the parameter map
 				result = funcExec(ResolveVariables.NAME, (LeafNode)node, variables);
 				//In case of depth 0, variable name instead of result.getName() 'unknown'
 				String name = ( depth==0 ? node.getName() : result.getName() );
 				putVar(name, result, depth, variables);
 				//putVar(result.getName(), result, depth, variables);
-			}else if(functions.containsKey(node.getName())) {
+			}
+			
+			// The function (implied by key test)
+			else if(functions.containsKey(node.getName())) {
 				//If it's a function run the function
 				//and set the result to the parameter map
 				result = funcExec(node.getName(), (LeafNode)node, variables);
+				
 				//### some sugar ###
-				//In case of unshift
+				//~a (<lemonade a)
+				//In case of unshift, unshift the function's result
 				if(node.getType()==Type.UNSHIFT) {
 					Function func = functions.get(UnshiftData.NAME).getInstance();
 					result = func.exec(result);
 				}
+				
+				//A variable may point to another one
 				//In case of depth 0, variable name instead of result.getName() 'unknown'
+				//offliteral ~a
 				//if the variable is changeable (not final).
 				String name = result.getName();
 				if(depth==0) {
 					String n = ((LeafNode)node).getValue();
+					//Only a variable can start with Accent.CHANGE, need no extra test
 					if(n.charAt(0)==Accent.CHANGE)
 						name = n;
 				}
-				putVar(name, result, depth, variables);
 				//###
+				
+				putVar(name, result, depth, variables);
 				//putVar(result.getName(), result, depth, variables);
-			}else {
+			}
+			
+			// A variable set
+			else {
 				//Set the value to the parameter map
-				result = node;
+				
+				//### some sugar ###
+				//<~a ~a
+				//In case of unshift, unshift the variable's data
+				if(node.getType()==Type.UNSHIFT) {
+					if(variables.containsKey(node.getName())) {
+						result = variables.get(node.getName());
+					}else {
+						result = node;
+					}
+					Function func = functions.get(UnshiftData.NAME).getInstance();
+					result = func.exec(result);
+				}
+				//###
+				
+				else {
+					result = node;
+				}
 				putVar(result.getName(), result, depth, variables);
 			}
 		}//fi
@@ -226,7 +277,7 @@ public class TupleResolver {
 		
 		if(variables.containsKey(key)) {
 			node = variables.get(key);
-			logger.debug("Get variable by function name:{}, key:{}, hash:{}",
+			logger.debug("{}: Get variable by function key:{}, hash:{}",
 					fname, key, node.hashCode());
 		}
 		
@@ -234,14 +285,14 @@ public class TupleResolver {
 		//if( !(node instanceof LeafNode))
 		//	throw new IllegalArgumentException(fname+": The variable '"+key+"' is not a leaf node.");
 		Node resl = null;
-		logger.debug("Node to function key:{}, hash:{}, node:{}", node.getName(), node.hashCode(), node);
+		logger.debug("{}: Node to function key:{}, hash:{}, node:{}", fname, node.getName(), node.hashCode(), node);
 		
 		if( func instanceof FunctionVars  )
 			resl = ((FunctionVars) func).exec(node, variables);
 		else
 			resl = func.exec(node);
 		
-		logger.debug("Node return key:{}, hash:{}, node:{}", resl.getName(), resl.hashCode(), resl);
+		logger.debug("{}: Node return key:{}, hash:{}, node:{}", fname, resl.getName(), resl.hashCode(), resl);
 		return resl;
 	}
 	
