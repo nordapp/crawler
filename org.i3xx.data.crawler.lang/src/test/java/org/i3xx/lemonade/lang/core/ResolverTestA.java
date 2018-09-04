@@ -164,6 +164,25 @@ class ResolverTestA {
 		assertEquals( n.getName(), "d");
 		assertEquals( ((LeafNode)n).getValue(), "hello world");
 	}
+
+	@Test
+	void testE() throws Exception {
+		
+		ListNode list = new ListNodeImpl();
+		String stmt = "";
+		
+		stmt += "a.a hello\n";
+		
+		TupleParser p = new TupleParser();
+		p.parse(list, stmt);
+		
+		TupleResolver r = new TupleResolver();
+		Node n = r.resolveAndGetLast(list);
+		
+		assertTrue( n instanceof LeafNodeImpl );
+		assertEquals( n.getName(), "a.a");
+		assertEquals( ((LeafNode)n).getValue(), "hello");
+	}
 	
 	//
 	// Recursion works, but doesn't make any sense

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.i3xx.lemonade.lang.core.Function;
 import org.i3xx.lemonade.lang.util.f.GetHttpTensor;
 import org.i3xx.lemonade.lang.util.f.GitHubProperties;
+import org.i3xx.lemonade.lang.util.f.GitHubSource;
 import org.i3xx.lemonade.lang.util.f.JXPathProcessor;
 import org.i3xx.lemonade.lang.util.f.JsonOut;
 import org.i3xx.lemonade.lang.util.f.JsonParser;
@@ -27,6 +28,7 @@ public class BuiltinFunctions {
 		Map<String, Function> functions = new HashMap<String, Function>();
 		functions.put(GetHttpTensor.NAME, new GetHttpTensor());
 		functions.put(GitHubProperties.NAME, new GitHubProperties());
+		functions.put(GitHubSource.NAME, new GitHubSource());
 		functions.put(JXPathProcessor.NAME, new JXPathProcessor());
 		functions.put(JsonOut.NAME, new JsonOut());
 		functions.put(JsonParser.NAME, new JsonParser());
