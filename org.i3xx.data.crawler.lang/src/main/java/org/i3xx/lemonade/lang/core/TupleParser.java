@@ -104,7 +104,13 @@ public class TupleParser {
 					type = Type.UNSHIFT;
 				}
 				
-				if(tp[1].startsWith("(") && tp[1].endsWith(")")) {
+				//### some sugar ###
+				//a: ... and a (...) are equivalent
+				if(tp[0].endsWith(":")) {
+					node = new ListNodeImpl(type, tp[0].substring(0, tp[0].length()-1), null);
+					parse( (ListNode)node, tp[1] );
+				}
+				else if(tp[1].startsWith("(") && tp[1].endsWith(")")) {
 					node = new ListNodeImpl(type, tp[0], null);
 					parse( (ListNode)node, tp[1].substring(1, tp[1].length()-1) );
 				}
