@@ -1,0 +1,15 @@
+
+~a ==::
+	#
+	~a Hallo
+	~b $~a; Welt
+	resolve ~b
+	return ~b
+::==
+
+~c ==1::
+	lemonade ~a
+	return ~a
+::1==
+
+lemonade ~c
