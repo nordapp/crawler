@@ -1,6 +1,6 @@
-package org.i3xx.lemonade.lang.util.l;
+package org.i3xx.lemonade.lang.util.lang;
 
-public class LScriptException extends Exception {
+public class LanguageException extends Exception {
 
 	/**
 	 * 
@@ -19,21 +19,21 @@ public class LScriptException extends Exception {
 	/**
 	 * 
 	 */
-	public LScriptException() {
+	public LanguageException() {
 		super();
 	}
 	
 	/**
 	 * @param message
 	 */
-	public LScriptException(String message) {
+	public LanguageException(String message) {
 		super(message);
 	}
 	
 	/**
 	 * @param cause
 	 */
-	public LScriptException(Exception cause) {
+	public LanguageException(Exception cause) {
 		super(cause);
 	}
 	
@@ -43,7 +43,7 @@ public class LScriptException extends Exception {
 	 * @param col
 	 * @param source
 	 */
-	public LScriptException(Exception cause, int line, int col, String source) {
+	public LanguageException(Exception cause, int line, int col, String source) {
 		super(cause);
 		
 		this.line = line;

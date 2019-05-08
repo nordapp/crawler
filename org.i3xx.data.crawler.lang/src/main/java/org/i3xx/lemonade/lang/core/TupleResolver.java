@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.i3xx.lemonade.lang.core.Node.Type;
 import org.i3xx.lemonade.lang.util.BuiltinFunctions;
-import org.i3xx.lemonade.lang.util.f.ResolveVariables;
-import org.i3xx.lemonade.lang.util.f.UnshiftData;
+import org.i3xx.lemonade.lang.util.func.ResolveVariables;
+import org.i3xx.lemonade.lang.util.func.UnshiftData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

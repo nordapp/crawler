@@ -1,4 +1,4 @@
-package org.i3xx.lemonade.lang.util.l;
+package org.i3xx.lemonade.lang.util.lang;
 
 import java.io.IOException;
 import java.util.Map;
@@ -29,7 +29,7 @@ public class LemonadeRt extends FunctionVars implements Language {
 	}
 	
 	@Override
-	public Object execute(String name, String stmt, Map<String, Node> variables) throws LScriptException {
+	public Object execute(String name, String stmt, Map<String, Node> variables) throws LanguageException {
 		
 		try {
 			ListNode list = new ListNodeImpl();
@@ -58,11 +58,11 @@ public class LemonadeRt extends FunctionVars implements Language {
 			logger.debug("Exception in name {}, stmt {}", name,
 					stmt);
 			
-			throw new LScriptException(e, e.getLine(), 1, stmt);
+			throw new LanguageException(e, e.getLine(), 1, stmt);
 		} catch (IOException e) {
-			throw new LScriptException(e, 1, 1, stmt);
+			throw new LanguageException(e, 1, 1, stmt);
 		} catch (Exception e) {
-			throw new LScriptException(e, 1, 1, stmt);
+			throw new LanguageException(e, 1, 1, stmt);
 		}
 	}
 

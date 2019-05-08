@@ -1,4 +1,4 @@
-package org.i3xx.lemonade.lang.util.l;
+package org.i3xx.lemonade.lang.util.lang;
 
 import java.util.Map;
 

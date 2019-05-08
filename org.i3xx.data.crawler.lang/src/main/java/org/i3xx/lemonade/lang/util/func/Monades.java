@@ -1,4 +1,4 @@
-package org.i3xx.lemonade.lang.util.f;
+package org.i3xx.lemonade.lang.util.func;
 
 import org.i3xx.lemonade.lang.core.Function;
 import org.i3xx.lemonade.lang.core.ListNode;
