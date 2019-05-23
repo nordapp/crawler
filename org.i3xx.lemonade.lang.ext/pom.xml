@@ -46,11 +46,12 @@
 	    <version>1.10.0</version>
 	</dependency>
 	
-	<dependency>
+	<!-- Clojure doesn't work actually -->
+	<!-- <dependency>
 	    <groupId>clojure-jsr-223</groupId>
 	    <artifactId>clojure-jsr-223</artifactId>
 	    <version>0.3.0</version>
-	</dependency>
+	</dependency> -->
 	
 	<dependency>
 		<groupId>org.slf4j</groupId>
